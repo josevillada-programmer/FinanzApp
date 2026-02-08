@@ -6,16 +6,17 @@
     <title>FinanzApp | Ingeniería & Negocios</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body class="dark-mode">
     <div id="modalTerminos" class="modal" style="display: flex;">
         <div class="modal-content">
-            <h2>Términos y Seguridad Bancaria</h2>
-            <p>Uso <strong>educativo</strong>. Sesión privada sin almacenamiento de datos.</p>
+            <h2>Seguridad Bancaria</h2>
+            <p>Plataforma privada. No almacenamos registros financieros.</p>
             <ul style="text-align: left; color: #94a3b8; font-size: 0.85rem; margin: 20px 0;">
-                <li><strong>Riesgo Bajo:</strong> CETES y Ahorro estable.</li>
-                <li><strong>Riesgo Medio:</strong> S&P 500 (Renta variable).</li>
-                <li><strong>Riesgo Alto:</strong> Criptoactivos y Venture Capital.</li>
+                <li>Riesgo Bajo: CETES / SOFIPOS / Ahorro.</li>
+                <li>Riesgo Medio: S&P 500 (ETF).</li>
+                <li>Riesgo Alto: Criptoactivos / Growth.</li>
             </ul>
             <button id="aceptarTerminos" class="btn-main">Iniciar Sesión Segura</button>
         </div>
@@ -24,20 +25,22 @@
     <div id="modalAlerta" class="modal">
         <div class="modal-content" style="max-width: 400px;">
             <h2 style="color: #ef4444;">⚠️ Límite Excedido</h2>
-            <p>Límite de proyección: 90 años para estabilidad del sistema.</p>
-            <button id="cerrarAlerta" class="btn-main">Entendido</button>
+            <p>Límite de proyección: 90 años.</p>
+            <button id="cerrarAlerta" class="btn-main">Aceptar</button>
         </div>
     </div>
 
     <div id="modalResultado" class="modal">
-        <div class="modal-content" style="max-width: 450px;">
+        <div class="modal-content" id="reporte-pdf" style="max-width: 450px;">
             <h2>📊 Reporte de Simulación</h2>
             <div id="detalle-final" style="margin: 25px 0;"></div>
             <div class="qr-container">
-                <p style="font-size: 0.8rem; color: #333; margin-bottom: 10px;">Escanea para apoyar:</p>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paypal.me/TU_USUARIO" alt="QR PayPal">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://paypal.me/josevillada" alt="QR PayPal">
             </div>
-            <button id="cerrarReporte" class="btn-main" style="margin-top: 20px;">Cerrar Reporte</button>
+            <div style="margin-top: 20px; display: flex; gap: 10px;">
+                <button id="btnPDF" class="btn-main" style="background: var(--profit); color: #000;">Descargar PDF</button>
+                <button id="cerrarReporte" class="btn-main">Cerrar</button>
+            </div>
         </div>
     </div>
 
@@ -47,6 +50,7 @@
                 <h1>Finanz<span>App</span></h1>
                 <button id="theme-toggle">🌓</button>
             </div>
+            <p>Ingeniería & Negocios ® 2026</p>
         </header>
 
         <main class="dashboard">
@@ -75,6 +79,7 @@
                         </optgroup>
                         <optgroup label="Riesgo Medio">
                             <option value="12">S&P 500 (ETF) (12%)</option>
+                            <option value="18">Préstamos P2P (18%)</option>
                         </optgroup>
                         <optgroup label="Alto Riesgo">
                             <option value="25">Acciones Growth (25%)</option>
@@ -84,9 +89,9 @@
                     </select>
                 </div>
                 <div id="risk-warning" class="warning-box" style="display: none;">
-                    ⚠️ Activo volátil. Riesgo de pérdida de capital.
+                    ⚠️ Activo de alta volatilidad. Riesgo de pérdida.
                 </div>
-                <button id="btnCalcular" class="btn-main">Proyectar Futuro</button>
+                <button id="btnCalcular" class="btn-main">Calcular Proyección</button>
             </section>
 
             <section class="results">
@@ -95,15 +100,12 @@
                     <div class="card highlight"><h3>Interés</h3><p id="res-interes">$0.00</p></div>
                     <div class="card"><h3>Capital</h3><p id="res-capital">$0.00</p></div>
                 </div>
-                <div class="chart-container">
-                    <canvas id="mainChart"></canvas>
-                </div>
+                <div class="chart-container"><canvas id="mainChart"></canvas></div>
             </section>
         </main>
 
         <footer class="main-footer">
-            <p>Ingeniería & Negocios ® 2026</p>
-            <a href="https://paypal.me/jossvill200" target="_blank" style="text-decoration: none;">
+            <a href="https://paypal.me/josevillada" target="_blank" style="text-decoration: none;">
                 <button class="donate-btn">☕ Apoyar Proyecto</button>
             </a>
         </footer>

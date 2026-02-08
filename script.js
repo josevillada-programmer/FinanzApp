@@ -6,9 +6,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('modalTerminos').style.display = "none";
         ejecutar(false);
     };
-
     document.getElementById('btnCalcular').onclick = () => ejecutar(true);
     document.getElementById('cerrarAlerta').onclick = () => document.getElementById('modalAlerta').style.display = "none";
+    document.getElementById('btnPDF').onclick = generarPDF;
     
     document.getElementById('tasa').onchange = (e) => {
         const warning = document.getElementById('risk-warning');
@@ -26,6 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 });
 
+function generarPDF() {
+    const elemento = document.getElementById('reporte-pdf');
+    const opt = {
+        margin: 10,
+        filename: 'Reporte_FinanzApp.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2, logging: false, backgroundColor: '#1e293b' },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(elemento).save();
+}
+
 function ejecutar(mostrarModal) {
     const inicio = parseInt(document.getElementById('edad-inicio').value);
     const fin = parseInt(document.getElementById('edad-fin').value);
@@ -33,14 +45,12 @@ function ejecutar(mostrarModal) {
     const select = document.getElementById('tasa');
     const tasa = parseFloat(select.value);
     const nombreEstrategia = select.options[select.selectedIndex].text;
-    
     const anios = fin - inicio;
 
     if (anios > 90) {
         document.getElementById('modalAlerta').style.display = "flex";
         return;
     }
-
     if (anios <= 0 || isNaN(aporte)) return;
 
     const meses = anios * 12;
@@ -68,7 +78,8 @@ function ejecutar(mostrarModal) {
             <h1 style="color:var(--profit); margin:15px 0;">${fmt.format(total)}</h1>
             <p><strong>Estrategia:</strong> ${nombreEstrategia}</p>
             <p><strong>Capital invertido:</strong> ${fmt.format(capTotal)}</p>
-            <small style="display:block; margin-top:15px; color:#ef4444;">* Seguridad Bancaria: Sin registros almacenados.</small>
+            <p><strong>Rendimiento generado:</strong> ${fmt.format(total - capTotal)}</p>
+            <small style="display:block; margin-top:15px; color:#ef4444;">* Documento generado por Villada | Ingeniería & Finanzas.</small>
         `;
         document.getElementById('modalResultado').style.display = "flex";
     }
