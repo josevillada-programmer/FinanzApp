@@ -30,9 +30,9 @@ function generarPDF() {
     const elemento = document.getElementById('reporte-pdf');
     const opt = {
         margin: 10,
-        filename: 'Reporte_FinanzApp.pdf',
+        filename: 'Reporte_Villada_Finanzas.pdf',
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2, logging: false, backgroundColor: '#1e293b' },
+        html2canvas: { scale: 2, backgroundColor: '#1e293b' },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().set(opt).from(elemento).save();
@@ -42,9 +42,8 @@ function ejecutar(mostrarModal) {
     const inicio = parseInt(document.getElementById('edad-inicio').value);
     const fin = parseInt(document.getElementById('edad-fin').value);
     const aporte = parseFloat(document.getElementById('aporte').value);
-    const select = document.getElementById('tasa');
-    const tasa = parseFloat(select.value);
-    const nombreEstrategia = select.options[select.selectedIndex].text;
+    const tasa = parseFloat(document.getElementById('tasa').value);
+    const nombreEstrategia = document.getElementById('tasa').options[document.getElementById('tasa').selectedIndex].text;
     const anios = fin - inicio;
 
     if (anios > 90) {
@@ -74,12 +73,12 @@ function ejecutar(mostrarModal) {
 
     if (mostrarModal) {
         document.getElementById('detalle-final').innerHTML = `
-            <p style="color:#94a3b8;">Reporte para retiro a los ${fin} años:</p>
-            <h1 style="color:var(--profit); margin:15px 0;">${fmt.format(total)}</h1>
+            <p style="color:#94a3b8;">Plan proyectado a los ${fin} años:</p>
+            <h1 style="color:#4ade80; margin:15px 0;">${fmt.format(total)}</h1>
             <p><strong>Estrategia:</strong> ${nombreEstrategia}</p>
-            <p><strong>Capital invertido:</strong> ${fmt.format(capTotal)}</p>
-            <p><strong>Rendimiento generado:</strong> ${fmt.format(total - capTotal)}</p>
-            <small style="display:block; margin-top:15px; color:#ef4444;">* Documento generado por Villada | Ingeniería & Finanzas.</small>
+            <p><strong>Capital Invertido:</strong> ${fmt.format(capTotal)}</p>
+            <p><strong>Intereses Ganados:</strong> ${fmt.format(total - capTotal)}</p>
+            <small style="display:block; margin-top:15px; color:#ef4444;">* Generado por Villada | Ingeniería & Finanzas.</small>
         `;
         document.getElementById('modalResultado').style.display = "flex";
     }
